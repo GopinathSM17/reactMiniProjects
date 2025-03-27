@@ -1,12 +1,12 @@
 import React from "react";
 
-const EmailList = ({ emails }) => {
+const EmailList = ({ filterEmail , filterState }) => {
   return (
-    <div className="flex flex-col gap-3  text-[14px]">
-      {emails.map((email) => (
-        <div className="email-box flex items-center gap-4 pl-4 border-slate-400 border-2 bg-white border-r-2 rounded-md  ">
+    <div className="flex flex-col gap-3 overflow-y-auto text-[14px]">
+      {filterEmail.map((email) => (
+        <div className="email-box flex items-center gap-4 pl-4 border-slate-400 border-2 bg-white border-r-2 rounded-md  " key={email.id}>
           <div className="icon-div flex bg-red-500 w-[50px] h-[50px] rounded-full justify-center items-center text-[16px] text-white">F</div>
-          <div className="email-contents" key={email.id}>
+          <div className="email-contents" >
             <div className="from-div">
               <span>
                 From : {email.from.name} {email.from.email}

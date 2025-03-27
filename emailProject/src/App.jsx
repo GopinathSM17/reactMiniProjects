@@ -2,6 +2,7 @@ import React from "react";
 import Button from "./components/Button";
 import {useState, useEffect} from "react";
 import EmailList from "./components/EmailList";
+import ButtonsController from "./components/ButtonsController";
 
 const App = () => {
   const [emails, setEmails] = useState([]);
@@ -30,16 +31,18 @@ const App = () => {
     fetchEmails();
   }, []);
 
+  const [filterState, setFilterState] = useState(null);
+  const [filterEmail, setFilterEmail] = useState([]);
+
+
   return (
     <div className="mainContainer flex flex-col bg-slate-300  p-[30px] ">
       <div className="header flex justify-start gap-4 ">
         <p>Filter By : </p>
-        <Button buttonName="Unread" />
-        <Button buttonName="Read" />
-        <Button buttonName="Favourites" />
+        <ButtonsController buttonName="Unread" setFilterState={setFilterState} setFilterEmail={setFilterEmail} emails={emails} />
       </div>
       <div className="email-list">
-       <EmailList emails={emails}/>
+       <EmailList filterEmail={filterEmail} filterState={filterState}/>
       </div>
     </div>
   );
