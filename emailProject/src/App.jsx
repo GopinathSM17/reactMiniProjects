@@ -8,6 +8,8 @@ import EmailBody from "./components/EmailBody";
 const App = () => {
   const [emails, setEmails] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
 
   useEffect(() => {
     const fetchEmails = async () => {
@@ -25,6 +27,8 @@ const App = () => {
         setEmails(updatedEmail);
       } catch (error) {
         console.error("Error fetching all emails", error);
+        setLoading(false);
+        setError(error.message);
       } finally {
         setLoading(false);
       }

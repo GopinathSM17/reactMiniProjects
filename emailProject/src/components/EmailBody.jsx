@@ -7,6 +7,7 @@ const EmailBody = ({ emailIdForBody, emails, setEmails }) => {
   const email = emails.find((e) => e.id === emailIdForBody); // Get latest state
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchEmail = async (id) => {
@@ -23,6 +24,8 @@ const EmailBody = ({ emailIdForBody, emails, setEmails }) => {
         );
       } catch (error) {
         console.error("Error fetching all email", error);
+        setError(error.message)
+        setLoading(false);
       } finally {
         setLoading(false);
       }
