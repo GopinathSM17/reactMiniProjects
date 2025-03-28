@@ -16,7 +16,7 @@ const ButtonsController = ({buttonName, setFilterEmail, emails, setEmailIdForBod
     setFilterEmail(data);
     setEmailIdForBody(null);
     setButtonState(1);
-    return data;
+
   }
 
   const handleReadClick = ()=>{
@@ -31,7 +31,7 @@ const ButtonsController = ({buttonName, setFilterEmail, emails, setEmailIdForBod
     setFilterEmail(data);
     setEmailIdForBody(null);
     setButtonState(2);
-    return data;
+
   }
 
   const handleFavoriteClick = ()=>{
@@ -46,7 +46,7 @@ const ButtonsController = ({buttonName, setFilterEmail, emails, setEmailIdForBod
     setFilterEmail(data);
     setEmailIdForBody(null);
     setButtonState(3);
-    return data;
+
   }
 
   return (
