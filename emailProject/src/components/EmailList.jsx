@@ -1,7 +1,7 @@
 import React from "react";
 import { timeStampToDateAndTime } from "../utils";
 
-const EmailList = ({ filterEmail, emails, filterState, setEmailIdForBody, setEmails }) => {
+const EmailList = ({ filterEmail, emails, setEmailIdForBody, setEmails, setFilterEmail }) => {
   const handleEmailClick = (emailId) => {
     console.log(emailId);
     console.log(emails[emailId]);
@@ -12,6 +12,7 @@ const EmailList = ({ filterEmail, emails, filterState, setEmailIdForBody, setEma
           email.id === emailId ? { ...email, read: true } : email
         )
       );
+
   };
   return (
     <div className="flex flex-col gap-3  overflow-y-auto h-[100vh] text-[14px]">

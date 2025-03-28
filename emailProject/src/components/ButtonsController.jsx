@@ -2,7 +2,7 @@ import React from 'react'
 import Button from './Button'
 import { useState } from 'react'
 
-const ButtonsController = ({buttonName, setFilterState, setFilterEmail, emails, setEmailIdForBody}) => {
+const ButtonsController = ({buttonName, setFilterEmail, emails, setEmailIdForBody}) => {
   const [buttonState, setButtonState] = useState(1);
   const handleUnReadClick = ()=>{
     console.log("I'm unread button");
@@ -51,9 +51,9 @@ const ButtonsController = ({buttonName, setFilterState, setFilterEmail, emails, 
 
   return (
     <div className='buttons-div flex gap-4'>
-        <Button buttonName="Unread" className={`flex text-[14px] justify-center items-center w-[75px] rounded-full   ${buttonState === 1 ? " border-2 border-slate-700 bg-white text-black " : ""  }`} setFilterState={setFilterState} handleClick={handleUnReadClick} />
-        <Button buttonName="Read" className={`flex text-[14px] justify-center items-center w-[75px] rounded-full   ${buttonState === 2 ? " border-2 border-slate-700 bg-white text-black" : ""  }`} setFilterState={setFilterState} handleClick={handleReadClick} />
-        <Button buttonName="Favorites" className={`flex text-[14px] justify-center items-center w-[75px] rounded-full   ${buttonState === 3 ? " border-2 border-slate-700 bg-white text-black" : ""  }`} setFilterState={setFilterState} handleClick={handleFavoriteClick} />
+        <Button buttonName="Unread" className={`flex text-[14px] justify-center items-center w-[75px] rounded-full   ${buttonState === 1 ? " border-2 border-slate-700 bg-white text-black " : ""  }`}  handleClick={handleUnReadClick} />
+        <Button buttonName="Read" className={`flex text-[14px] justify-center items-center w-[75px] rounded-full   ${buttonState === 2 ? " border-2 border-slate-700 bg-white text-black" : ""  }`}  handleClick={handleReadClick} />
+        <Button buttonName="Favorites" className={`flex text-[14px] justify-center items-center w-[75px] rounded-full   ${buttonState === 3 ? " border-2 border-slate-700 bg-white text-black" : ""  }`}  handleClick={handleFavoriteClick} />
     </div>
   )
 }

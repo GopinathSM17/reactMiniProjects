@@ -36,7 +36,6 @@ const App = () => {
     fetchEmails();
   }, []);
 
-  const [filterState, setFilterState] = useState(null);
   const [filterEmail, setFilterEmail] = useState(null);
 
   const [emailIdForBody, setEmailIdForBody] = useState(null);
@@ -48,7 +47,6 @@ const App = () => {
         <p>Filter By : </p>
         <ButtonsController
           buttonName="Unread"
-          setFilterState={setFilterState}
           setFilterEmail={setFilterEmail}
           emails={emails}
           setEmailIdForBody={setEmailIdForBody}
@@ -62,8 +60,8 @@ const App = () => {
             setEmailIdForBody={setEmailIdForBody}
             filterEmail={filterEmail}
             emails={emails}
-            filterState={filterState}
             setEmails={setEmails}
+            setFilterEmail={setFilterEmail}
           />
         </div>
         {emailIdForBody && (
