@@ -30,7 +30,36 @@ const App = () => {
     fetchData();
   }, []);
 
+  let filterData = [];
 
+  const [filters, setFilters] = useState({
+    subscriptionType: "Show all",
+  });
+
+  if (filters["subscriptionType"]) {
+
+    if (filters["subscriptionType"] === "Free access") {
+
+      filterData= data.filter((company) => {
+        if (! company["flags"]["private"]) {
+          return true;
+        }
+        return false;
+      });
+    }
+    else if(filters["subscriptionType"] === "Show all"){
+      filterData = data;
+    }
+    else if(filters["subscriptionType"] === "Fee based") {
+
+      filterData= data.filter((company) => {
+        if (company["flags"]["private"]) {
+          return true;
+        }
+        return false;
+      });
+    }
+  }
 
   return (
     <div className="body pl-[30px] pr-[30px] pt-4">
@@ -40,8 +69,8 @@ const App = () => {
       </h1>
       <NavigationBar />
       <div className="filter-and-records flex pt-4">
-        <FilterBar />
-        <CardsBar data={data}  />
+        <FilterBar setFilters={setFilters} filters={filters} />
+        <CardsBar data={data} filterData={filterData} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 
 const Card = ({ item }) => {
   return (
-    <div className="flex items-center  justify-between p-7 border-[1px] border-white hover:border-gray-400 rounded-lg ">
+    <div  className="flex items-center  justify-between p-7 border-[1px] border-white hover:border-gray-400 rounded-lg ">
       <img
         src={`https://assets.smallcase.com/images/smallcases/200/${item.scid}.png`}
         alt=""
