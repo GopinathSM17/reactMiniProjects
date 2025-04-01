@@ -35,7 +35,8 @@ const App = () => {
   const [filters, setFilters] = useState({
     subscriptionType: "Show all",
     investmentAmount: "Any",
-    Volatility: []
+    Volatility: [],
+    investmentStrategy : []
   });
 
   if (filters["subscriptionType"]) {
@@ -83,6 +84,24 @@ const App = () => {
 
     filterData = filterData.filter((company)=> {
       return volatilityArr.includes(company.stats.ratios.riskLabel);
+    })
+  }
+
+  if(filters["investmentStrategy"].length > 0){
+
+    let investmentStrategyArr = filters["investmentStrategy"];
+
+    filterData = filterData.filter((company)=>{
+      const companyInvestmentStrategies = company["info"]["investmentStrategy"];
+      let flag = false;
+      if(companyInvestmentStrategies){
+        companyInvestmentStrategies.forEach(element => {
+          if(investmentStrategyArr.includes(element.displayName)){
+            flag = true;
+          }
+        });
+      }
+      return flag;
     })
   }
   

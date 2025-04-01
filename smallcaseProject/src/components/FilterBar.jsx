@@ -10,9 +10,29 @@ const FilterBar = ({ setFilters }) => {
     { id: "Under $ 50,000", value: 50000 },
   ];
 
-  const volatility = [{ id: "Low Volatility" }, { id: "Medium Volatility" }, { id: "High Volatility" }];
+  const volatility = [
+    { id: "Low Volatility" },
+    { id: "Medium Volatility" },
+    { id: "High Volatility" },
+  ];
 
-  
+  const investmentStrategy = [
+    { id: "Asset Allocation" },
+    { id: "Corporate Governance" },
+    { id: "Dividend" },
+    { id: "ESG" },
+    { id: "Factor Investing" },
+    { id: "Goal Based" },
+    { id: "Growth" },
+    { id: "Momentum" },
+    { id: "Quality" },
+    { id: "Qunatamental" },
+    { id: "Quantitative" },
+    { id: "Sector Tracker" },
+    { id: "Technical" },
+    { id: "Thematic" },
+    { id: "Value" },
+  ];
 
   const handleFilterClick = (filterValue) => {
     setFilters((prev) => {
@@ -24,11 +44,10 @@ const FilterBar = ({ setFilters }) => {
     });
   };
 
-
   const handleVolatilityClick = (volatilityValue) => {
     setFilters((prev) => {
-      let updatedVolatility = [...prev.Volatility]; 
-      
+      let updatedVolatility = [...prev.Volatility];
+
       if (updatedVolatility.includes(volatilityValue.volatility)) {
         updatedVolatility = updatedVolatility.filter(
           (item) => item !== volatilityValue.volatility
@@ -36,13 +55,32 @@ const FilterBar = ({ setFilters }) => {
       } else {
         updatedVolatility.push(volatilityValue.volatility);
       }
-  
+
       return {
         ...prev,
         Volatility: updatedVolatility,
       };
     });
   };
+
+  const handleInvestmentStrategyClick = (investmentStrategyValue) => {
+    setFilters((prev)=>{
+      let updatedStrategy = [...prev.investmentStrategy];
+
+      if(updatedStrategy.includes(investmentStrategyValue.investmentStrategy)){
+        updatedStrategy = updatedStrategy.filter(
+          (item) => item !== investmentStrategyValue.investmentStrategy
+        );
+      } else {
+        updatedStrategy.push(investmentStrategyValue.investmentStrategy);
+      }
+
+      return {
+        ...prev,
+        investmentStrategy : updatedStrategy,
+      }
+    })
+  }
   return (
     <div className="flex flex-col w-[20%] gap-2">
       <div className="filter-head "></div>
@@ -65,11 +103,10 @@ const FilterBar = ({ setFilters }) => {
       <div className="investment-amount-filter flex flex-col gap-4">
         <h3 className="">Investment Amount</h3>
         <div className="radio-buttons flex flex-col gap-2">
-          {investmentAmount.map((amount, index) => (
+          {investmentAmount.map((amount) => (
             <label key={amount.id} className="flex gap-1">
               <input
                 type="radio"
-                name="investment"
                 value={amount.value}
                 className=""
                 onClick={() =>
@@ -101,7 +138,25 @@ const FilterBar = ({ setFilters }) => {
         </div>
       </div>
       {/* this is the fourth filter */}
-      <div className=""></div>
+      <div className="investment-strategy-filter flex flex-col gap-4">
+        <h3 className="">Investment Strategy</h3>
+        <div className="investment-checkboxs flex flex-col gap-2">
+          {investmentStrategy.map((investType) => (
+            <label key={investType.id} className="flex gap-1">
+              <input
+                type="checkbox"
+                name="investment"
+                value={investType.id}
+                className=""
+                onClick={() =>
+                  handleInvestmentStrategyClick({ investmentStrategy : investType.id })
+                }
+              />
+              <span>{investType.id}</span>
+            </label>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
