@@ -8,12 +8,12 @@ const Sorter = ({ setFilters, filters }) => {
     { id: "Recently Rebalanced" },
   ];
 
-  const timePeriod = [
-    { id: "1M", value: "One Month" },
-    { id: "6M", value: "Six Month" },
-    { id: "1Y", value: "One Year" },
-    { id: "3Y", value: "Three Year" },
-    { id: "5Y", value: "Five Year" },
+  const timePeriods = [
+    { id: "1M", value: "One Month", state: "monthly" },
+    { id: "6M", value: "Six Month", state: "halfyearly" },
+    { id: "1Y", value: "One Year", state: "yearly" },
+    { id: "3Y", value: "Three Year", state: "threeYear" },
+    { id: "5Y", value: "Five Year", state: "fiveYear" },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +23,7 @@ const Sorter = ({ setFilters, filters }) => {
     setIsOpen(!isOpen);
   };
 
-  const selectSortHandleClick = (currentSelectedSortType) => {    
+  const selectSortHandleClick = (currentSelectedSortType) => {
     setFilters((prev) => {
       let updated = {
         ...prev,
@@ -52,14 +52,28 @@ const Sorter = ({ setFilters, filters }) => {
                 type="radio"
                 name="sorterType"
                 value={sortType.id}
-                onClick={() => selectSortHandleClick({sortType : sortType.id })}
+                onClick={() => selectSortHandleClick({ sortType: sortType.id })}
               />
             </label>
           ))}
           {/* this is the code for return section */}
-          <div className="mt-4 flex">
+          <div className="mt-4 flex flex-col gap-4">
             <h2 className="">Returns</h2>
             <p className="">Time period</p>
+            <div className="time-period-radio-buttons flex justify-between border-[1px] border-gray-400">
+              {timePeriods.map((period) => (
+                <label key={period.id} className="flex  items-center space-x-2">
+                  <input
+                    type="radio"
+                    name="timePeriod"
+                    value={period.id}
+                    className="form-radio h-[30px] w-[20px] border-white  text-blue-600"
+                    onClick={() => selectSortHandleClick({sortType : period.state})}
+                  />
+                  <span className="absolute flex items-center text-[10px]">{period.id}</span>
+                </label>
+              ))}
+            </div>
           </div>
         </div>
       )}

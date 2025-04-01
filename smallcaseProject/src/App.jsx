@@ -138,6 +138,26 @@ const App = () => {
     if(filters["sortType"]  == "Recently Rebalanced"){
       filterData.sort((a, b) => new Date(a["info"]["lastRebalanced"]) -  new Date(b["info"]["lastRebalanced"]) );
     }
+    if(filters["sortType"]  == "monthly"){
+      console.log(filters["sortType"]);
+      filterData.sort((a,b) => a["stats"]["returns"]["monthly"] - b["stats"]["returns"]["monthly"])
+    }
+    if(filters["sortType"]  == "halfyearly"){
+      console.log(filters["sortType"]);
+      filterData.sort((a,b) => a["stats"]["returns"]["halfyearly"] - b["stats"]["returns"]["halfyearly"])
+    }
+    if(filters["sortType"]  == "yearly"){
+      console.log(filters["sortType"]);
+      filterData.sort((a,b) => a["stats"]["returns"]["yearly"] - b["stats"]["returns"]["yearly"])
+    }
+    if(filters["sortType"]  == "threeYear"){
+      console.log(filters["sortType"]);
+      filterData.sort((a,b) => a["stats"]["returns"]["threeYear"] - b["stats"]["returns"]["threeYear"])
+    }
+    if(filters["sortType"]  == "fiveYear"){
+      console.log(filters["sortType"]);
+      filterData.sort((a,b) => a["stats"]["returns"]["fiveYear"] - b["stats"]["returns"]["fiveYear"])
+    }
   }
 
 

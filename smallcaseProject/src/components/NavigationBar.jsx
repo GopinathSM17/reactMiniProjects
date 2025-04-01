@@ -13,7 +13,7 @@ const NavigationBar = ({setFilters, filters}) => {
         <a className="">Managers</a>
       </div>
       <div className="right-side-nav-bar flex flex-row-reverse gap-4">
-        <div className="search-bar">This is the search bae</div>
+        <div className="search-bar">This is the search bar</div>
         <Sorter setFilters={setFilters} filters={filters}  />
       </div>
     </div>
