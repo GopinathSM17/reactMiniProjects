@@ -64,10 +64,12 @@ const FilterBar = ({ setFilters }) => {
   };
 
   const handleInvestmentStrategyClick = (investmentStrategyValue) => {
-    setFilters((prev)=>{
+    setFilters((prev) => {
       let updatedStrategy = [...prev.investmentStrategy];
 
-      if(updatedStrategy.includes(investmentStrategyValue.investmentStrategy)){
+      if (
+        updatedStrategy.includes(investmentStrategyValue.investmentStrategy)
+      ) {
         updatedStrategy = updatedStrategy.filter(
           (item) => item !== investmentStrategyValue.investmentStrategy
         );
@@ -77,10 +79,22 @@ const FilterBar = ({ setFilters }) => {
 
       return {
         ...prev,
-        investmentStrategy : updatedStrategy,
-      }
-    })
-  }
+        investmentStrategy: updatedStrategy,
+      };
+    });
+  };
+
+  const handleLaunchDateClick = () => {
+    // console.log("launch date checkbox clicked");
+    const valurToAdd = { launchDate : "created" };
+    setFilters((prev) => {
+      let updated = {
+        ...prev,
+        ...valurToAdd,
+      };
+      return updated;
+    });
+  };
   return (
     <div className="flex flex-col w-[20%] gap-2">
       <div className="filter-head "></div>
@@ -108,6 +122,7 @@ const FilterBar = ({ setFilters }) => {
               <input
                 type="radio"
                 value={amount.value}
+                name="investment"
                 className=""
                 onClick={() =>
                   handleFilterClick({ investmentAmount: amount.value })
@@ -138,6 +153,18 @@ const FilterBar = ({ setFilters }) => {
         </div>
       </div>
       {/* this is the fourth filter */}
+      <div className="launch-date-filter flex flex-col gap-4">
+        <h3 className="">Launch Date</h3>
+        <label className="flex gap-1">
+          <input
+            type="checkbox"
+            className=""
+            onClick={() => handleLaunchDateClick()}
+          />
+          <span>Include new smallcases</span>
+        </label>
+      </div>
+      {/* this is the five filter */}
       <div className="investment-strategy-filter flex flex-col gap-4">
         <h3 className="">Investment Strategy</h3>
         <div className="investment-checkboxs flex flex-col gap-2">
@@ -149,7 +176,9 @@ const FilterBar = ({ setFilters }) => {
                 value={investType.id}
                 className=""
                 onClick={() =>
-                  handleInvestmentStrategyClick({ investmentStrategy : investType.id })
+                  handleInvestmentStrategyClick({
+                    investmentStrategy: investType.id,
+                  })
                 }
               />
               <span>{investType.id}</span>
