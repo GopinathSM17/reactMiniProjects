@@ -15,7 +15,7 @@ const App = () => {
       try {
         const res = await fetch("./smallcases.json");
         const fetchedData = await res.json();
-        console.log(fetchedData.data);
+
 
         setData(fetchedData.data);
         return fetchedData.data;
@@ -34,6 +34,8 @@ const App = () => {
 
   const [filters, setFilters] = useState({
     subscriptionType: "Show all",
+    investmentAmount: "Any",
+    Volatility: []
   });
 
   if (filters["subscriptionType"]) {
@@ -61,7 +63,6 @@ const App = () => {
     }
   }
   if(filters["investmentAmount"]){
-    console.log(filters["investmentAmount"]);
 
     if(filters["investmentAmount"] == "Any"){
 
@@ -76,6 +77,14 @@ const App = () => {
     }
   }
 
+  if(filters["Volatility"].length > 0){
+
+    let volatilityArr = filters["Volatility"];
+
+    filterData = filterData.filter((company)=> {
+      return volatilityArr.includes(company.stats.ratios.riskLabel);
+    })
+  }
   
 
   return (
