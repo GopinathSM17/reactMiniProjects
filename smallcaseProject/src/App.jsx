@@ -38,6 +38,7 @@ const App = () => {
     Volatility: [],
     investmentStrategy : [],
     launchDate : "",
+    sortType : "popularity",
   });
 
   if (filters["subscriptionType"]) {
@@ -126,6 +127,20 @@ const App = () => {
       return false;
     })
   }
+
+  if(filters["sortType"] != ""){
+    if(filters["sortType"] == "popularity"){
+      filterData.sort((a, b) => a["brokerMeta"]["flags"]["popular"]["rank"] - b["brokerMeta"]["flags"]["popular"]["rank"]);
+    }
+    if(filters["sortType"] == "Minimum Amount"){
+      filterData.sort((a, b) => a["stats"]["minInvestAmount"] - b["stats"]["minInvestAmount"]);
+    }
+    if(filters["sortType"]  == "Recently Rebalanced"){
+      filterData.sort((a, b) => new Date(a["info"]["lastRebalanced"]) -  new Date(b["info"]["lastRebalanced"]) );
+    }
+  }
+
+
   
 
   return (
@@ -134,7 +149,7 @@ const App = () => {
       <h1 className="flex h-[100px] text-[24px] font-bold justify-start items-center">
         Discover
       </h1>
-      <NavigationBar />
+      <NavigationBar setFilters={setFilters} filters={filters} />
       <div className="filter-and-records flex pt-4">
         <FilterBar setFilters={setFilters} />
         <CardsBar data={data} filterData={filterData} />
