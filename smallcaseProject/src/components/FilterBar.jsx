@@ -1,6 +1,6 @@
 import React from "react";
 
-const FilterBar = ({ setFilters }) => {
+const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
   const subscriptionType = ["Show all", "Free access", "Fee based"];
 
   const investmentAmount = [
@@ -35,6 +35,7 @@ const FilterBar = ({ setFilters }) => {
   ];
 
   const handleFilterClick = (filterValue) => {
+    setFilterCount(prevCount => prevCount + 1);
     setFilters((prev) => {
       let updated = {
         ...prev,
@@ -45,6 +46,7 @@ const FilterBar = ({ setFilters }) => {
   };
 
   const handleVolatilityClick = (volatilityValue) => {
+    setFilterCount(prevCount => prevCount + 1);
     setFilters((prev) => {
       let updatedVolatility = [...prev.Volatility];
 
@@ -64,6 +66,7 @@ const FilterBar = ({ setFilters }) => {
   };
 
   const handleInvestmentStrategyClick = (investmentStrategyValue) => {
+    setFilterCount(prevCount => prevCount + 1);
     setFilters((prev) => {
       let updatedStrategy = [...prev.investmentStrategy];
 
@@ -86,7 +89,8 @@ const FilterBar = ({ setFilters }) => {
 
   const handleLaunchDateClick = () => {
     // console.log("launch date checkbox clicked");
-    const valurToAdd = { launchDate : "created" };
+    setFilterCount(prevCount => prevCount + 1);
+    const valurToAdd = { launchDate: "created" };
     setFilters((prev) => {
       let updated = {
         ...prev,
@@ -95,13 +99,39 @@ const FilterBar = ({ setFilters }) => {
       return updated;
     });
   };
+
+  const handleClearAllButton = () => {
+    console.log("clear all button clicked");
+    setFilterCount(0);
+    setFilters({
+      subscriptionType: "Show all",
+      investmentAmount: "Any",
+      Volatility: [],
+      investmentStrategy: [],
+      launchDate: "",
+      sortType: "popularity",
+    });
+  };
   return (
-    <div className="flex flex-col w-[20%] gap-2">
-      <div className="filter-head "></div>
+    <div className="flex flex-col w-[20%] gap-3  p-[10px]">
+      <div className="filter-head flex justify-between border-b-[1px] border-gray-400 p-[5px] ">
+        <div className="filter-count flex gap-3">
+          <h3 className="">Filters</h3>
+          <span className="bg-gray-300 w-7 h-7 flex items-center justify-center rounded-md">
+            {filterCount}
+          </span>
+        </div>
+        <button
+          className="clear-all-button text-[12px] font-bold text-gray-400 "
+          onClick={() => handleClearAllButton()}
+        >
+          Clear All
+        </button>
+      </div>
       {/* this is the 1st filter */}
-      <div className="subscription-type-filter flex flex-col gap-4">
+      <div className="subscription-type flex flex-col gap-2">
         <h3 className="">Subscription Type</h3>
-        <div className="buttons flex border-[2px] border-gray-500 p-[10px] ">
+        <div className="buttons flex border-[1px] rounded-md border-gray-500 p-[10px] ">
           {subscriptionType.map((sub) => (
             <button
               key={sub}

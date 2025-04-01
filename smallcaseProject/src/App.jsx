@@ -41,6 +41,8 @@ const App = () => {
     sortType : "popularity",
   });
 
+  const [filterCount, setFilterCount] = useState(0);
+
   if (filters["subscriptionType"]) {
 
     if (filters["subscriptionType"] === "Free access") {
@@ -171,8 +173,8 @@ const App = () => {
       </h1>
       <NavigationBar setFilters={setFilters} filters={filters} />
       <div className="filter-and-records flex pt-4">
-        <FilterBar setFilters={setFilters} />
-        <CardsBar data={data} filterData={filterData} />
+        <FilterBar setFilters={setFilters} filterCount={filterCount} setFilterCount={setFilterCount} />
+        <CardsBar data={data} filterData={filterData} setFilterCount={setFilterCount} />
       </div>
     </div>
   );
