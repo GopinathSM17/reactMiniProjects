@@ -60,6 +60,23 @@ const App = () => {
       });
     }
   }
+  if(filters["investmentAmount"]){
+    console.log(filters["investmentAmount"]);
+
+    if(filters["investmentAmount"] == "Any"){
+
+    }
+    else{
+      filterData = filterData.filter((company) => {
+        if(company["stats"]["minInvestAmount"] <= filters["investmentAmount"] ){
+          return true;
+        } 
+        return false;    
+      })
+    }
+  }
+
+  
 
   return (
     <div className="body pl-[30px] pr-[30px] pt-4">
@@ -69,7 +86,7 @@ const App = () => {
       </h1>
       <NavigationBar />
       <div className="filter-and-records flex pt-4">
-        <FilterBar setFilters={setFilters} filters={filters} />
+        <FilterBar setFilters={setFilters} />
         <CardsBar data={data} filterData={filterData} />
       </div>
     </div>

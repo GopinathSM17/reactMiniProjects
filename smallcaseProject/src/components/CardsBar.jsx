@@ -8,7 +8,7 @@ const CardsBar = ({ data, filterData }) => {
           {filterData.length ? (
         filterData.map((item) => <Card key={item["_id"]} item={item}  />)
       ) : (
-        <h1 className="font-extrabold  text-gray-600 text-3xl w-[30vw] mt-4 ">
+        <h1 className="font-bold justify-center items-center  text-gray-600 text-3xl w-[80%] mt-4 ">
           No filterData after filter
         </h1>
       )}
