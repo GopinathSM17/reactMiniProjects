@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
+const FilterBar = ({ filters, setFilters }) => {
   const subscriptionType = ["Show all", "Free access", "Fee based"];
 
   const investmentAmount = [
@@ -34,8 +34,14 @@ const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
     { id: "Value" },
   ];
 
+  // this states are for css part
+  const [selectedSubscription, setSelectedSubscription] = useState(
+    subscriptionType[0]
+  );
+
   const handleFilterClick = (filterValue) => {
-    setFilterCount(prevCount => prevCount + 1);
+    setSelectedSubscription(filterValue.subscriptionType);
+
     setFilters((prev) => {
       let updated = {
         ...prev,
@@ -46,7 +52,6 @@ const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
   };
 
   const handleVolatilityClick = (volatilityValue) => {
-    setFilterCount(prevCount => prevCount + 1);
     setFilters((prev) => {
       let updatedVolatility = [...prev.Volatility];
 
@@ -66,7 +71,6 @@ const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
   };
 
   const handleInvestmentStrategyClick = (investmentStrategyValue) => {
-    setFilterCount(prevCount => prevCount + 1);
     setFilters((prev) => {
       let updatedStrategy = [...prev.investmentStrategy];
 
@@ -89,7 +93,7 @@ const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
 
   const handleLaunchDateClick = () => {
     // console.log("launch date checkbox clicked");
-    setFilterCount(prevCount => prevCount + 1);
+
     const valurToAdd = { launchDate: "created" };
     setFilters((prev) => {
       let updated = {
@@ -102,7 +106,6 @@ const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
 
   const handleClearAllButton = () => {
     console.log("clear all button clicked");
-    setFilterCount(0);
     setFilters({
       subscriptionType: "Show all",
       investmentAmount: "Any",
@@ -110,16 +113,34 @@ const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
       investmentStrategy: [],
       launchDate: "",
       sortType: "popularity",
-      orderBy : "asce",
+      orderBy: "asce",
     });
   };
+
+  const setFilterCount = () => {
+    let currFilterCount = 0;
+    if (filters["subscriptionType"] !== "Show all") {
+      currFilterCount++;
+    }
+    if (filters["investmentAmount"] !== "Any") {
+      currFilterCount++;
+    }
+    if (filters["launchDate"] !== "") {
+      currFilterCount++;
+    }
+    currFilterCount += filters["Volatility"].length;
+    currFilterCount += filters["investmentStrategy"].length;
+
+    return currFilterCount;
+  };
+
   return (
     <div className="flex flex-col w-[20%] gap-3  p-[10px]">
       <div className="filter-head flex justify-between border-b-[1px] border-gray-400 p-[5px] ">
         <div className="filter-count flex gap-3">
           <h3 className="">Filters</h3>
           <span className="bg-gray-300 w-7 h-7 flex items-center justify-center rounded-md">
-            {filterCount}
+            {setFilterCount()}
           </span>
         </div>
         <button
@@ -136,7 +157,11 @@ const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
           {subscriptionType.map((sub) => (
             <button
               key={sub}
-              className={`text-center hover:bg-gray-100 rounded-md `}
+              className={`text-center  rounded-md ${
+                selectedSubscription === sub
+                  ? "bg-blue-300"
+                  : "hover:bg-gray-100"
+              } `}
               onClick={() => handleFilterClick({ subscriptionType: sub })}
             >
               {sub}
@@ -154,7 +179,7 @@ const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
                 type="radio"
                 value={amount.value}
                 name="investment"
-                className=""
+                className={``}
                 onClick={() =>
                   handleFilterClick({ investmentAmount: amount.value })
                 }
@@ -171,10 +196,14 @@ const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
           {volatility.map((vol, index) => (
             <div
               key={index}
-              className="low border-[1px] border-gray-500 h-[60px] w-[60px] flex flex-col justify-center items-center"
+              className={`low  rounded-md  h-[60px] w-[60px] flex flex-col justify-center items-center ${
+                filters["Volatility"].includes(vol.id)
+                  ? "border-blue-400 border-[2px]"
+                  : "border-gray-500 border-[1px]"
+              } `}
             >
               <button
-                className={`${vol.id}-button text-[12px]`}
+                className={`${vol.id}-button text-[12px] `}
                 onClick={() => handleVolatilityClick({ volatility: vol.id })}
               >
                 {vol.id}

@@ -42,7 +42,9 @@ const App = () => {
     orderBy : "asce",
   });
 
-  const [filterCount, setFilterCount] = useState(0);
+  // const [filterCount, setFilterCount] = useState(0);
+
+  
 
   if (filters["subscriptionType"]) {
 
@@ -103,6 +105,7 @@ const App = () => {
         companyInvestmentStrategies.forEach(element => {
           if(investmentStrategyArr.includes(element.displayName)){
             flag = true;
+            return flag
           }
         });
       }
@@ -195,7 +198,7 @@ const App = () => {
       </h1>
       <NavigationBar setFilters={setFilters} filters={filters} />
       <div className="filter-and-records flex pt-4">
-        <FilterBar setFilters={setFilters} filterCount={filterCount} setFilterCount={setFilterCount} />
+        <FilterBar filters={filters} setFilters={setFilters} />
         <CardsBar  filterData={filterData} />
       </div>
     </div>
