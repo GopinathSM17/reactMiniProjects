@@ -33,6 +33,18 @@ const Sorter = ({ setFilters, filters }) => {
     });
   };
 
+  const handleSortOrder = (sortOrderType) => {
+    console.log(sortOrderType);
+    
+    setFilters((prev) => {
+        let updated = {
+          ...prev,
+          ...sortOrderType,
+        };
+        return updated;
+      });
+  }
+
   return (
     <div className="relative flex flex-col  border-b-[1px] border-gray-400 pb-4  hover:border-black">
       <input
@@ -60,20 +72,42 @@ const Sorter = ({ setFilters, filters }) => {
           <div className="mt-4 flex flex-col gap-4">
             <h2 className="">Returns</h2>
             <p className="">Time period</p>
-            <div className="time-period-radio-buttons flex justify-between border-[1px] border-gray-400">
+            <div className="time-period-radio-buttons flex justify-between border-[1px] border-gray-300  rounded-md p-[5px]">
               {timePeriods.map((period) => (
                 <label key={period.id} className="flex  items-center space-x-2">
                   <input
                     type="radio"
                     name="timePeriod"
                     value={period.id}
-                    className="form-radio h-[30px] w-[20px] border-white  text-blue-600"
+                    className=" h-[30px] w-[20px] border-white  text-blue-600"
                     onClick={() => selectSortHandleClick({sortType : period.state})}
                   />
                   <span className="absolute flex items-center text-[10px]">{period.id}</span>
                 </label>
               ))}
             </div>
+            <div className="asce-or-desc flex  w-[100%] border-[1px] border-gray-300 rounded-md p-[3px]">
+                <label key="asce" className="w-[50%] ">
+                    <input 
+                    type="radio"
+                    name="orderRadioButtons"
+                    value="asce"
+                    className="hidden"
+                    onClick={()=> handleSortOrder({orderBy : "asce"})}
+                     />
+                    <span className=" flex items-center justify-center text-[10px]">High - Low</span>
+                </label>
+                <label key="desc" className="w-[50%]">
+                    <input 
+                    type="radio"
+                    name="orderRadioButtons"
+                    value="asce"
+                    className="hidden"
+                    onClick={()=> handleSortOrder({orderBy : "desc"})}
+                     />
+                    <span className=" flex items-center justify-center text-[10px]">Low - High</span>
+                </label>
+              </div>
           </div>
         </div>
       )}

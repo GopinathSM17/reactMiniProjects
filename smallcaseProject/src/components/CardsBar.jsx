@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "./Card";
 
-const CardsBar = ({ data, filterData }) => {
+const CardsBar = ({ filterData }) => {
 
   return (
     <div className="flex flex-col w-[80%]" >

@@ -110,6 +110,7 @@ const FilterBar = ({ setFilters, filterCount, setFilterCount }) => {
       investmentStrategy: [],
       launchDate: "",
       sortType: "popularity",
+      orderBy : "asce",
     });
   };
   return (

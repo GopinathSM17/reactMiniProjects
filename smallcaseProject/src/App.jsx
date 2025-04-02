@@ -39,6 +39,7 @@ const App = () => {
     investmentStrategy : [],
     launchDate : "",
     sortType : "popularity",
+    orderBy : "asce",
   });
 
   const [filterCount, setFilterCount] = useState(0);
@@ -141,24 +142,45 @@ const App = () => {
       filterData.sort((a, b) => new Date(a["info"]["lastRebalanced"]) -  new Date(b["info"]["lastRebalanced"]) );
     }
     if(filters["sortType"]  == "monthly"){
-      console.log(filters["sortType"]);
-      filterData.sort((a,b) => a["stats"]["returns"]["monthly"] - b["stats"]["returns"]["monthly"])
+      if(filters["orderBy"] == "asce"){
+        filterData.sort((a,b) => a["stats"]["returns"]["monthly"] - b["stats"]["returns"]["monthly"])
+      }
+      else{
+        filterData.sort((a,b) => b["stats"]["returns"]["monthly"] - a["stats"]["returns"]["monthly"])
+      }
+      
     }
     if(filters["sortType"]  == "halfyearly"){
-      console.log(filters["sortType"]);
-      filterData.sort((a,b) => a["stats"]["returns"]["halfyearly"] - b["stats"]["returns"]["halfyearly"])
+      if(filters["orderBy"] == "asce"){
+        filterData.sort((a,b) => a["stats"]["returns"]["halfyearly"] - b["stats"]["returns"]["halfyearly"])
+      }
+      else{
+        filterData.sort((a,b) => b["stats"]["returns"]["halfyearly"] - a["stats"]["returns"]["halfyearly"])
+      }
     }
     if(filters["sortType"]  == "yearly"){
-      console.log(filters["sortType"]);
-      filterData.sort((a,b) => a["stats"]["returns"]["yearly"] - b["stats"]["returns"]["yearly"])
+      if(filters["orderBy"] == "asce"){
+        filterData.sort((a,b) => a["stats"]["returns"]["yearly"] - b["stats"]["returns"]["yearly"])
+      }
+      else{
+        filterData.sort((a,b) => b["stats"]["returns"]["yearly"] - a["stats"]["returns"]["yearly"])
+      }
     }
     if(filters["sortType"]  == "threeYear"){
-      console.log(filters["sortType"]);
-      filterData.sort((a,b) => a["stats"]["returns"]["threeYear"] - b["stats"]["returns"]["threeYear"])
+      if(filters["orderBy"] == "asce"){
+        filterData.sort((a,b) => a["stats"]["returns"]["threeYear"] - b["stats"]["returns"]["threeYear"])
+      }
+      else{
+        filterData.sort((a,b) => b["stats"]["returns"]["threeYear"] - a["stats"]["returns"]["threeYear"])
+      }
     }
     if(filters["sortType"]  == "fiveYear"){
-      console.log(filters["sortType"]);
-      filterData.sort((a,b) => a["stats"]["returns"]["fiveYear"] - b["stats"]["returns"]["fiveYear"])
+      if(filters["orderBy"] == "asce"){
+        filterData.sort((a,b) => a["stats"]["returns"]["fiveYear"] - b["stats"]["returns"]["fiveYear"])
+      }
+      else{
+        filterData.sort((a,b) => b["stats"]["returns"]["fiveYear"] - a["stats"]["returns"]["fiveYear"])
+      }
     }
   }
 
@@ -174,7 +196,7 @@ const App = () => {
       <NavigationBar setFilters={setFilters} filters={filters} />
       <div className="filter-and-records flex pt-4">
         <FilterBar setFilters={setFilters} filterCount={filterCount} setFilterCount={setFilterCount} />
-        <CardsBar data={data} filterData={filterData} setFilterCount={setFilterCount} />
+        <CardsBar  filterData={filterData} />
       </div>
     </div>
   );
