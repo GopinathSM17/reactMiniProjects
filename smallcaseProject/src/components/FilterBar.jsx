@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import FilterSection from "./FilterSection"
+import SubscriptionTypeFilter from "./filterComponent/SubscriptionTypeFilter";
+import InvestmentAmountFilter from "./filterComponent/InvestmentAmountFilter";
+import VolatilityFilter from "./filterComponent/VolatilityFilter";
+import LaunchDateFilter from "./filterComponent/LaunchDateFilter";
+import InvestmentStrategyFilter from "./filterComponent/InvestmentStrategyFilter";
+
 
 const FilterBar = ({ filters, setFilters }) => {
   const subscriptionType = ["Show all", "Free access", "Fee based"];
@@ -33,76 +40,6 @@ const FilterBar = ({ filters, setFilters }) => {
     { id: "Thematic" },
     { id: "Value" },
   ];
-
-  // this states are for css part
-  const [selectedSubscription, setSelectedSubscription] = useState(
-    subscriptionType[0]
-  );
-
-  const handleFilterClick = (filterValue) => {
-    setSelectedSubscription(filterValue.subscriptionType);
-
-    setFilters((prev) => {
-      let updated = {
-        ...prev,
-        ...filterValue,
-      };
-      return updated;
-    });
-  };
-
-  const handleVolatilityClick = (volatilityValue) => {
-    setFilters((prev) => {
-      let updatedVolatility = [...prev.Volatility];
-
-      if (updatedVolatility.includes(volatilityValue.volatility)) {
-        updatedVolatility = updatedVolatility.filter(
-          (item) => item !== volatilityValue.volatility
-        );
-      } else {
-        updatedVolatility.push(volatilityValue.volatility);
-      }
-
-      return {
-        ...prev,
-        Volatility: updatedVolatility,
-      };
-    });
-  };
-
-  const handleInvestmentStrategyClick = (investmentStrategyValue) => {
-    setFilters((prev) => {
-      let updatedStrategy = [...prev.investmentStrategy];
-
-      if (
-        updatedStrategy.includes(investmentStrategyValue.investmentStrategy)
-      ) {
-        updatedStrategy = updatedStrategy.filter(
-          (item) => item !== investmentStrategyValue.investmentStrategy
-        );
-      } else {
-        updatedStrategy.push(investmentStrategyValue.investmentStrategy);
-      }
-
-      return {
-        ...prev,
-        investmentStrategy: updatedStrategy,
-      };
-    });
-  };
-
-  const handleLaunchDateClick = () => {
-    // console.log("launch date checkbox clicked");
-
-    const valurToAdd = { launchDate: "created" };
-    setFilters((prev) => {
-      let updated = {
-        ...prev,
-        ...valurToAdd,
-      };
-      return updated;
-    });
-  };
 
   const handleClearAllButton = () => {
     console.log("clear all button clicked");
@@ -151,81 +88,30 @@ const FilterBar = ({ filters, setFilters }) => {
         </button>
       </div>
       {/* this is the 1st filter */}
-      <div className="subscription-type flex flex-col gap-2">
-        <h3 className="">Subscription Type</h3>
-        <div className="buttons flex border-[1px] rounded-md border-gray-500 p-[10px] ">
-          {subscriptionType.map((sub) => (
-            <button
-              key={sub}
-              className={`text-center  rounded-md ${
-                selectedSubscription === sub
-                  ? "bg-blue-300"
-                  : "hover:bg-gray-100"
-              } `}
-              onClick={() => handleFilterClick({ subscriptionType: sub })}
-            >
-              {sub}
-            </button>
-          ))}
-        </div>
-      </div>
+      <FilterSection heading="Subscription Type">
+        <SubscriptionTypeFilter  subscriptionType={subscriptionType} setFilters={setFilters} />
+      </FilterSection>
+      
       {/* this is the second filter */}
-      <div className="investment-amount-filter flex flex-col gap-4">
-        <h3 className="">Investment Amount</h3>
-        <div className="radio-buttons flex flex-col gap-2">
-          {investmentAmount.map((amount) => (
-            <label key={amount.id} className="flex gap-1">
-              <input
-                type="radio"
-                value={amount.value}
-                name="investment"
-                className={``}
-                onClick={() =>
-                  handleFilterClick({ investmentAmount: amount.value })
-                }
-              />
-              <span>{amount.id}</span>
-            </label>
-          ))}
-        </div>
-      </div>
+      <FilterSection heading="Investment Amount">
+        <InvestmentAmountFilter investmentAmount={investmentAmount} setFilters={setFilters}  />
+      </FilterSection>
+
       {/* this is the third filter */}
-      <div className="volatility-filter flex flex-col gap-4 ">
-        <h3 className="">Volatility</h3>
-        <div className="volatility-buttons flex gap-2">
-          {volatility.map((vol, index) => (
-            <div
-              key={index}
-              className={`low  rounded-md  h-[60px] w-[60px] flex flex-col justify-center items-center ${
-                filters["Volatility"].includes(vol.id)
-                  ? "border-blue-400 border-[2px]"
-                  : "border-gray-500 border-[1px]"
-              } `}
-            >
-              <button
-                className={`${vol.id}-button text-[12px] `}
-                onClick={() => handleVolatilityClick({ volatility: vol.id })}
-              >
-                {vol.id}
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
+      <FilterSection heading={"Volatility"}>
+        <VolatilityFilter volatility={volatility} setFilters={setFilters} filters={filters}/>
+      </FilterSection>
+  
       {/* this is the fourth filter */}
-      <div className="launch-date-filter flex flex-col gap-4">
-        <h3 className="">Launch Date</h3>
-        <label className="flex gap-1">
-          <input
-            type="checkbox"
-            className=""
-            onClick={() => handleLaunchDateClick()}
-          />
-          <span>Include new smallcases</span>
-        </label>
-      </div>
+      <FilterSection heading={"Launch Date"}>
+        <LaunchDateFilter setFilters={setFilters} filters={filters}/>
+      </FilterSection>
+
       {/* this is the five filter */}
-      <div className="investment-strategy-filter flex flex-col gap-4">
+      <FilterSection heading={"Investment Strategy"}>
+        <InvestmentStrategyFilter investmentStrategy={investmentStrategy} setFilters={setFilters} filters={filters}/>
+      </FilterSection>
+      {/* <div className="investment-strategy-filter flex flex-col gap-4">
         <h3 className="">Investment Strategy</h3>
         <div className="investment-checkboxs flex flex-col gap-2">
           {investmentStrategy.map((investType) => (
@@ -245,7 +131,7 @@ const FilterBar = ({ filters, setFilters }) => {
             </label>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
