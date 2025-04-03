@@ -15,7 +15,7 @@ const Card = ({ item }) => {
       </div>
       <div className="item-price flex items-start flex-col">
         <h3 className="text-[14px]">Min. Amount</h3>
-        <p className="text-[16px]">₹{item["stats"]["minInvestAmount"]}</p>
+        <p className="text-[16px]">₹{item["stats"]["minInvestAmount"].toLocaleString('en-IN')}</p>
       </div>
       <div className="item-ratio flex items-center flex-col">
         <div className="text-[14px]">{item["platformData"]["ratios"]["cagrDuration"]}</div>

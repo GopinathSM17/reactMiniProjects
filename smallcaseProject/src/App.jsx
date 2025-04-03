@@ -4,6 +4,9 @@ import Header from "./components/Header";
 import NavigationBar from "./components/NavigationBar";
 import FilterBar from "./components/FilterBar";
 import CardsBar from "./components/CardsBar";
+import {
+  initialFiltersObject
+} from "./utils/filterObjects";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -32,18 +35,7 @@ const App = () => {
 
   let filterData = [];
 
-  const [filters, setFilters] = useState({
-    subscriptionType: "Show all",
-    investmentAmount: "Any",
-    Volatility: [],
-    investmentStrategy : [],
-    launchDate : "",
-    sortType : "popularity",
-    orderBy : "asce",
-  });
-
-  // const [filterCount, setFilterCount] = useState(0);
-
+  const [filters, setFilters] = useState(initialFiltersObject);
   
 
   if (filters["subscriptionType"]) {

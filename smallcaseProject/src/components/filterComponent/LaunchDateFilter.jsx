@@ -7,7 +7,8 @@ const LaunchDateFilter = ({setFilters, filters}) => {
           <input
             type="checkbox"
             className=""
-            onClick={() => handleLaunchDateClick(setFilters)}
+            checked={filters.launchDate != ""}
+            onChange={() => handleLaunchDateClick(setFilters)}
           />
           <span>Include new smallcases</span>
         </label>

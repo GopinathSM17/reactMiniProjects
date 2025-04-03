@@ -11,7 +11,8 @@ const InvestmentStrategyFilter = ({investmentStrategy, setFilters, filters}) => 
             name="investment"
             value={investType.id}
             className=""
-            onClick={() =>
+            checked={filters.investmentStrategy.includes(investType.id) }
+            onChange={() =>
               handleInvestmentStrategyClick({
                 investmentStrategy: investType.id,
               }, setFilters)

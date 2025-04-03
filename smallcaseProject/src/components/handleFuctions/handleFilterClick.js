@@ -1,7 +1,6 @@
 
 
-const handleFilterClick = (filterValue, setSelectedSubscription, setFilters) => {
-    setSelectedSubscription(filterValue.subscriptionType);
+const handleFilterClick = (filterValue, setFilters) => {
 
     setFilters((prev) => {
       let updated = {
