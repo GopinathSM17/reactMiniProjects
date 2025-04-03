@@ -5,8 +5,15 @@ import NavigationBar from "./components/NavigationBar";
 import FilterBar from "./components/FilterBar";
 import CardsBar from "./components/CardsBar";
 import {
-  initialFiltersObject
+  initialFiltersObject,
+  subscriptionType
 } from "./utils/filterObjects";
+import subscriptionTypeFilterCheck from "./utils/subscriptionTypeFilterCheck";
+import investmentAmountFilterCheck from "./utils/investmentAmountFilterCheck";
+import volatilityFilteCheck from "./utils/volatilityFilterCheck";
+import investmentStrategyFilterCheck from "./utils/investmentStrategyFilterCheck";
+import launchDateFilterCheck from "./utils/launchDateFilterCheck";
+import sortTypeFilterCheck from "./utils/sortTypeFilterCheck";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -34,152 +41,15 @@ const App = () => {
   }, []);
 
   let filterData = [];
-
   const [filters, setFilters] = useState(initialFiltersObject);
   
-
-  if (filters["subscriptionType"]) {
-
-    if (filters["subscriptionType"] === "Free access") {
-
-      filterData= data.filter((company) => {
-        if (! company["flags"]["private"]) {
-          return true;
-        }
-        return false;
-      });
-    }
-    else if(filters["subscriptionType"] === "Show all"){
-      filterData = data;
-    }
-    else if(filters["subscriptionType"] === "Fee based") {
-
-      filterData= data.filter((company) => {
-        if (company["flags"]["private"]) {
-          return true;
-        }
-        return false;
-      });
-    }
-  }
-  if(filters["investmentAmount"]){
-
-    if(filters["investmentAmount"] == "Any"){
-
-    }
-    else{
-      filterData = filterData.filter((company) => {
-        if(company["stats"]["minInvestAmount"] <= filters["investmentAmount"] ){
-          return true;
-        } 
-        return false;    
-      })
-    }
-  }
-
-  if(filters["Volatility"].length > 0){
-
-    let volatilityArr = filters["Volatility"];
-
-    filterData = filterData.filter((company)=> {
-      return volatilityArr.includes(company.stats.ratios.riskLabel);
-    })
-  }
-
-  if(filters["investmentStrategy"].length > 0){
-
-    let investmentStrategyArr = filters["investmentStrategy"];
-
-    filterData = filterData.filter((company)=>{
-      const companyInvestmentStrategies = company["info"]["investmentStrategy"];
-      let flag = false;
-      if(companyInvestmentStrategies){
-        companyInvestmentStrategies.forEach(element => {
-          if(investmentStrategyArr.includes(element.displayName)){
-            flag = true;
-            return flag
-          }
-        });
-      }
-      return flag;
-    })
-  }
-
-  if(filters["launchDate"] != ""){
-    console.log(filters["launchDate"]); // "created"
-    const date = new Date();
-    const formattedDate = date.toISOString().split("T")[0];
-    const firstDate = new Date(formattedDate);
-    console.log(firstDate);
-    
-    filterData = filterData.filter((company) =>{
-      const currentValue = company["info"]["created"];
-      const currentDate =  currentValue.split("T")[0];
-      const newDate = new Date(currentDate)
-      
-      const difference = firstDate.getFullYear() - newDate.getFullYear();
-
-      if(difference > 1 ){
-        return true;
-      }
-      return false;
-    })
-  }
-
-  if(filters["sortType"] != ""){
-    if(filters["sortType"] == "popularity"){
-      filterData.sort((a, b) => a["brokerMeta"]["flags"]["popular"]["rank"] - b["brokerMeta"]["flags"]["popular"]["rank"]);
-    }
-    if(filters["sortType"] == "Minimum Amount"){
-      filterData.sort((a, b) => a["stats"]["minInvestAmount"] - b["stats"]["minInvestAmount"]);
-    }
-    if(filters["sortType"]  == "Recently Rebalanced"){
-      filterData.sort((a, b) => new Date(a["info"]["lastRebalanced"]) -  new Date(b["info"]["lastRebalanced"]) );
-    }
-    if(filters["sortType"]  == "monthly"){
-      if(filters["orderBy"] == "asce"){
-        filterData.sort((a,b) => a["stats"]["returns"]["monthly"] - b["stats"]["returns"]["monthly"])
-      }
-      else{
-        filterData.sort((a,b) => b["stats"]["returns"]["monthly"] - a["stats"]["returns"]["monthly"])
-      }
-      
-    }
-    if(filters["sortType"]  == "halfyearly"){
-      if(filters["orderBy"] == "asce"){
-        filterData.sort((a,b) => a["stats"]["returns"]["halfyearly"] - b["stats"]["returns"]["halfyearly"])
-      }
-      else{
-        filterData.sort((a,b) => b["stats"]["returns"]["halfyearly"] - a["stats"]["returns"]["halfyearly"])
-      }
-    }
-    if(filters["sortType"]  == "yearly"){
-      if(filters["orderBy"] == "asce"){
-        filterData.sort((a,b) => a["stats"]["returns"]["yearly"] - b["stats"]["returns"]["yearly"])
-      }
-      else{
-        filterData.sort((a,b) => b["stats"]["returns"]["yearly"] - a["stats"]["returns"]["yearly"])
-      }
-    }
-    if(filters["sortType"]  == "threeYear"){
-      if(filters["orderBy"] == "asce"){
-        filterData.sort((a,b) => a["stats"]["returns"]["threeYear"] - b["stats"]["returns"]["threeYear"])
-      }
-      else{
-        filterData.sort((a,b) => b["stats"]["returns"]["threeYear"] - a["stats"]["returns"]["threeYear"])
-      }
-    }
-    if(filters["sortType"]  == "fiveYear"){
-      if(filters["orderBy"] == "asce"){
-        filterData.sort((a,b) => a["stats"]["returns"]["fiveYear"] - b["stats"]["returns"]["fiveYear"])
-      }
-      else{
-        filterData.sort((a,b) => b["stats"]["returns"]["fiveYear"] - a["stats"]["returns"]["fiveYear"])
-      }
-    }
-  }
-
-
+  filterData = subscriptionTypeFilterCheck(filterData, filters, data);
+  filterData = investmentAmountFilterCheck(filterData, filters);
+  filterData = volatilityFilteCheck(filterData, filters);
+  filterData = investmentStrategyFilterCheck(filterData, filters);
+  filterData = launchDateFilterCheck(filterData, filters);
+  filterData = sortTypeFilterCheck(filterData, filters);
+ 
   
 
   return (
