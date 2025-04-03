@@ -8,7 +8,7 @@ const VolatilityFilter = ({volatility, setFilters, filters}) => {
             <div
               key={index}
               className={`low  rounded-md  h-[60px] w-[60px] flex flex-col justify-center items-center ${
-                filters["Volatility"].includes(vol.id)
+                filters["Volatility"].has(vol.id)
                   ? "border-blue-400 border-[2px]"
                   : "border-gray-500 border-[1px]"
               } `}

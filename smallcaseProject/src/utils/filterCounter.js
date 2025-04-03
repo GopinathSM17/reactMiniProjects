@@ -9,7 +9,7 @@ const filterCounter = (filters) => {
     if (filters["launchDate"] !== "") {
       currFilterCount++;
     }
-    currFilterCount += filters["Volatility"].length;
+    currFilterCount += filters["Volatility"].size;
     currFilterCount += filters["investmentStrategy"].length;
 
     return currFilterCount;

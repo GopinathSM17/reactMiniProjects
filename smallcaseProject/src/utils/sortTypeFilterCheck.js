@@ -18,38 +18,11 @@ const sortTypeFilterCheck = (filterData, filters)=>{
           }
           
         }
-        if(filters["sortType"]  == "halfyearly"){
-          if(filters["orderBy"] == "asce"){
-            filterData.sort((a,b) => a["stats"]["returns"]["halfyearly"] - b["stats"]["returns"]["halfyearly"])
-          }
-          else{
-            filterData.sort((a,b) => b["stats"]["returns"]["halfyearly"] - a["stats"]["returns"]["halfyearly"])
-          }
+        // for retruns sort by low-hig and high to low
+        else{
+          filterData.sort((a,b) => a["stats"]["returns"][filters["orderBy"]] - b["stats"]["returns"][filters["orderBy"]])
         }
-        if(filters["sortType"]  == "yearly"){
-          if(filters["orderBy"] == "asce"){
-            filterData.sort((a,b) => a["stats"]["returns"]["yearly"] - b["stats"]["returns"]["yearly"])
-          }
-          else{
-            filterData.sort((a,b) => b["stats"]["returns"]["yearly"] - a["stats"]["returns"]["yearly"])
-          }
-        }
-        if(filters["sortType"]  == "threeYear"){
-          if(filters["orderBy"] == "asce"){
-            filterData.sort((a,b) => a["stats"]["returns"]["threeYear"] - b["stats"]["returns"]["threeYear"])
-          }
-          else{
-            filterData.sort((a,b) => b["stats"]["returns"]["threeYear"] - a["stats"]["returns"]["threeYear"])
-          }
-        }
-        if(filters["sortType"]  == "fiveYear"){
-          if(filters["orderBy"] == "asce"){
-            filterData.sort((a,b) => a["stats"]["returns"]["fiveYear"] - b["stats"]["returns"]["fiveYear"])
-          }
-          else{
-            filterData.sort((a,b) => b["stats"]["returns"]["fiveYear"] - a["stats"]["returns"]["fiveYear"])
-          }
-        }
+        
       }
       return filterData;
 }

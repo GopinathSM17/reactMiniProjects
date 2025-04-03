@@ -1,13 +1,15 @@
 const handleVolatilityClick = (volatilityValue, setFilters) => {
     setFilters((prev) => {
-      let updatedVolatility = [...prev.Volatility];
+      console.log(prev.Volatility);
+      
+      let updatedVolatility = new Set([...prev.Volatility]);
 
-      if (updatedVolatility.includes(volatilityValue.volatility)) {
-        updatedVolatility = updatedVolatility.filter(
-          (item) => item !== volatilityValue.volatility
-        );
+      if (updatedVolatility.has(volatilityValue.volatility)) {
+        console.log("removing filters");
+        
+        updatedVolatility.delete(volatilityValue.volatility)
       } else {
-        updatedVolatility.push(volatilityValue.volatility);
+        updatedVolatility.add(volatilityValue.volatility);
       }
 
       return {

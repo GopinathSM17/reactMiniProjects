@@ -1,11 +1,6 @@
 const volatilityFilteCheck = (filterData, filters) => {
-    if (filters["Volatility"].length > 0) {
-
-        let volatilityArr = filters["Volatility"];
-
-        filterData = filterData.filter((company) => {
-            return volatilityArr.includes(company.stats.ratios.riskLabel);
-        })
+    if (filters["Volatility"].size > 0) {
+        filterData = filterData.filter((company ) => filters["Volatility"].has(company.stats.ratios.riskLabel))
     }
     return filterData
 }
