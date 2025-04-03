@@ -10,7 +10,7 @@ const filterCounter = (filters) => {
       currFilterCount++;
     }
     currFilterCount += filters["Volatility"].size;
-    currFilterCount += filters["investmentStrategy"].length;
+    currFilterCount += filters["investmentStrategy"].size;
 
     return currFilterCount;
   };

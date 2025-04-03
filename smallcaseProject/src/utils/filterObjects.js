@@ -3,7 +3,7 @@ export const initialFiltersObject = {
     subscriptionType: "Show all",
     investmentAmount: "Any",
     Volatility: new Set(),
-    investmentStrategy: [],
+    investmentStrategy: new Set(),
     launchDate: "",
     sortType: "popularity",
     orderBy: "asce",

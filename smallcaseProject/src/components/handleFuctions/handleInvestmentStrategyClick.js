@@ -1,15 +1,12 @@
 const handleInvestmentStrategyClick = (investmentStrategyValue, setFilters) => {
     setFilters((prev) => {
-      let updatedStrategy = [...prev.investmentStrategy];
+      let updatedStrategy =new Set([...prev.investmentStrategy]);
 
-      if (
-        updatedStrategy.includes(investmentStrategyValue.investmentStrategy)
-      ) {
-        updatedStrategy = updatedStrategy.filter(
-          (item) => item !== investmentStrategyValue.investmentStrategy
-        );
-      } else {
-        updatedStrategy.push(investmentStrategyValue.investmentStrategy);
+      if(updatedStrategy.has(investmentStrategyValue.investmentStrategy)){
+        updatedStrategy.delete(investmentStrategyValue.investmentStrategy);
+      }
+      else{
+        updatedStrategy.add(investmentStrategyValue.investmentStrategy);
       }
 
       return {

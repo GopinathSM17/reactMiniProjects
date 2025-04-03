@@ -1,22 +1,20 @@
 const handleVolatilityClick = (volatilityValue, setFilters) => {
-    setFilters((prev) => {
-      console.log(prev.Volatility);
-      
-      let updatedVolatility = new Set([...prev.Volatility]);
+  setFilters((prev) => {
 
-      if (updatedVolatility.has(volatilityValue.volatility)) {
-        console.log("removing filters");
-        
-        updatedVolatility.delete(volatilityValue.volatility)
-      } else {
-        updatedVolatility.add(volatilityValue.volatility);
-      }
+    let updatedVolatility = new Set([...prev.Volatility]);
 
-      return {
-        ...prev,
-        Volatility: updatedVolatility,
-      };
-    });
-  };
+    if (updatedVolatility.has(volatilityValue.volatility)) {
+      updatedVolatility.delete(volatilityValue.volatility)
 
-  export default handleVolatilityClick
+    } else {
+      updatedVolatility.add(volatilityValue.volatility);
+    }
+
+    return {
+      ...prev,
+      Volatility: updatedVolatility,
+    };
+  });
+};
+
+export default handleVolatilityClick

@@ -1,23 +1,23 @@
-const investmentStrategyFilterCheck = (filterData, filters) =>{
-    if(filters["investmentStrategy"].length > 0){
+const investmentStrategyFilterCheck = (filterData, filters) => {
+  if (filters["investmentStrategy"].size > 0) {
 
-        let investmentStrategyArr = filters["investmentStrategy"];
-    
-        filterData = filterData.filter((company)=>{
-          const companyInvestmentStrategies = company["info"]["investmentStrategy"];
-          let flag = false;
-          if(companyInvestmentStrategies){
-            companyInvestmentStrategies.forEach(element => {
-              if(investmentStrategyArr.includes(element.displayName)){
-                flag = true;
-                return flag
-              }
-            });
+    let investmentStrategySet = filters["investmentStrategy"];
+
+    filterData = filterData.filter((company) => {
+      const companyInvestmentStrategies = company["info"]["investmentStrategy"];
+      let flag = false;
+      if (companyInvestmentStrategies) {
+        for (let element of companyInvestmentStrategies) {
+          if (investmentStrategySet.has(element.displayName)) {
+            flag = true;
+            break;
           }
-          return flag;
-        })
+        }
       }
-      return filterData
+      return flag;
+    });
+  }
+  return filterData
 }
 
 export default investmentStrategyFilterCheck
